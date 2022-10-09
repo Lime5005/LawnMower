@@ -1,5 +1,4 @@
 import model.Instruction;
-import model.Lawn;
 import model.Mower;
 import model.Position;
 import service.MowerService;

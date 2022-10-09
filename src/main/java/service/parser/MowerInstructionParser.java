@@ -12,14 +12,13 @@ import java.util.Map;
 
 public class MowerInstructionParser {
     // Initialise the returning data
-    private Lawn lawn;
     private final List<Mower> mowers = new ArrayList<>();
     private final Map<Mower, List<Instruction>> mowerInstructionMap = new LinkedHashMap<>();
 
     // Initialise all validators
-     ValidateLawn lawnValidator = new ValidateLawn();
-     ValidatePosition positionValidator = new ValidatePosition();
-     ValidateOrientation orientationValidator = new ValidateOrientation();
+    ValidateLawn lawnValidator = new ValidateLawn();
+    ValidatePosition positionValidator = new ValidatePosition();
+    ValidateOrientation orientationValidator = new ValidateOrientation();
 
     public Lawn getLawnFromFile(List<String> fileData) {
         String lawnStr = fileData.get(0);
@@ -27,8 +26,7 @@ public class MowerInstructionParser {
             String[] split = lawnStr.split("\\s+");
             int xMax = Integer.parseInt(split[0]);
             int yMax = Integer.parseInt(split[1]);
-            lawn = new Lawn(xMax, yMax);
-            return lawn;
+            return new Lawn(xMax, yMax);
         } else {
             throw new IllegalArgumentException("Invalid lawn data " + lawnStr);
         }
