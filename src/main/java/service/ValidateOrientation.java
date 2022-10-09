@@ -2,17 +2,15 @@ package service;
 
 public class ValidateOrientation {
 
-    public boolean checkOrientation(String orientationStr) {
+    public boolean isValidOrientation(String orientation) {
         boolean isValid = false;
-        if (isValidOrientation(orientationStr)) {
+        if (isValidMowerOrientation(orientation)) {
             isValid = true;
-        } else {
-            throw new IllegalArgumentException("Orientation should be 'D', 'G', or 'A'");
         }
         return isValid;
     }
 
-    private boolean isValidOrientation (String str) {
-        return str.matches("^[GDA]+$");
+    private boolean isValidMowerOrientation (String orientation) {
+        return orientation.matches("^[GDA]+$");
     }
 }
