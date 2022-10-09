@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MowerBehaviorTest {
 
-    private final MowerService mowerServiceImp = new MowerService();
+    private final MowerService mowerService = new MowerService();
 
     @Test
     public void shouldMowAsInstructions() {
@@ -28,10 +28,66 @@ public class MowerBehaviorTest {
         Mower mower = new Mower(lawn, position);
 
         // when
-        mowerServiceImp.executeInstruction(mower, instructions);
+        mowerService.executeInstruction(mower, instructions);
 
         // then
         Position destinationPosition = new Position(1, 3, 'N');
         Assertions.assertEquals(destinationPosition, mower.getPosition());
+    }
+
+    @Test
+    public void shouldNotMowAsInstructions() {
+        // given
+        Position position = new Position(1, 2, 'N');
+        Lawn lawn = new Lawn(5, 5);
+        List<Instruction> instructions = new ArrayList<>(); // GAA
+        instructions.add(Instruction.LEFT);
+        instructions.add(Instruction.FORWARD);
+        instructions.add(Instruction.FORWARD);
+        Mower mower = new Mower(lawn, position);
+
+        // when
+        mowerService.executeInstruction(mower, instructions);
+
+        // then
+        Position destinationPosition = new Position(0, 2, 'W');
+        Assertions.assertEquals(destinationPosition, mower.getPosition());
+    }
+
+    @Test
+    public void shouldSkipAndContinueAsInstructions() {
+        // given
+        Position position = new Position(1, 2, 'N');
+        Lawn lawn = new Lawn(5, 5);
+        List<Instruction> instructions = new ArrayList<>(); // GAAGAA
+        instructions.add(Instruction.LEFT);
+        instructions.add(Instruction.FORWARD);
+        instructions.add(Instruction.FORWARD);
+        instructions.add(Instruction.LEFT);
+        instructions.add(Instruction.FORWARD);
+        instructions.add(Instruction.FORWARD);
+        Mower mower = new Mower(lawn, position);
+
+        // when
+        mowerService.executeInstruction(mower, instructions);
+
+        // then
+        Position destinationPosition = new Position(0, 0, 'S');
+        Assertions.assertEquals(destinationPosition, mower.getPosition());
+    }
+
+    @Test
+    public void shouldNotExecuteIfMowerNotInsideLawn() {
+        // given
+        Position position = new Position(1, 3, 'N');
+        Lawn lawn = new Lawn(1, 2);
+        List<Instruction> instructions = new ArrayList<>(); // G
+        instructions.add(Instruction.LEFT);
+        Mower mower = new Mower(lawn, position);
+
+        // when & then
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            mowerService.executeInstruction(mower, instructions);
+        });
     }
 }

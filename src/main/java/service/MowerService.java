@@ -10,12 +10,11 @@ public class MowerService {
     public Position executeInstruction(Mower mower, List<Instruction> instructionList) {
         Position position = mower.getPosition();
         Lawn lawn = mower.getLawn();
+        assertMowerInsideLawn(position, lawn);
         for (Instruction instruction : instructionList) {
             if (instruction == Instruction.FORWARD) {
                 if (goForward(position, lawn) != null) {
                      position = goForward(position, lawn);
-                } else {
-                    throw new IllegalArgumentException("Go forward invalid with position (" + position + ") and lawn (" + lawn + ")");
                 }
             } else {
                 Orientation orientation = changeOrientation(instruction, position);
@@ -23,8 +22,6 @@ public class MowerService {
                     char ori = orientation.getOri();
                     assert position != null;
                     position.setDir(ori);
-                } else {
-                    throw new IllegalArgumentException("Change Orientation failed with instruction + (" + instruction + ") and position (" + position + ")");
                 }
             }
         }
@@ -36,10 +33,11 @@ public class MowerService {
         Position forwardPosition = orientationService.getForwardPosition(position);
         int x = forwardPosition.getX();
         int y = forwardPosition.getY();
-        if (x >= 0 && x <= lawn.xMax() && y >= 0 && y <= lawn.yMax()) {
+        if ((x >= 0 && x <= lawn.xMax()) && (y >= 0 && y <= lawn.yMax())) {
             return forwardPosition;
+        } else {
+            return position;
         }
-        return null;
     }
 
     private Orientation changeOrientation(Instruction instruction, Position position) {
@@ -47,7 +45,14 @@ public class MowerService {
             return orientationService.getCounterClockwiseOrientation(position);
         } else if (instruction.equals(Instruction.RIGHT)) {
             return orientationService.getClockwiseOrientation(position);
+        } else {
+            throw new IllegalArgumentException("Change Orientation failed with instruction + (" + instruction + ") and position (" + position + ")");
         }
-        return null;
+    }
+
+    private void assertMowerInsideLawn(Position position, Lawn lawn) {
+        if (position.getX() > lawn.xMax() || position.getY() > lawn.yMax()) {
+            throw new IllegalArgumentException("Mower position (" + position  + ") outside of lawn (" + lawn + ")");
+        }
     }
 }
