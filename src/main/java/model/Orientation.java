@@ -15,6 +15,10 @@ public enum Orientation {
     private final int xForward;
     private final int yForward;
 
+    public char getOri() {
+        return ori;
+    }
+
     Orientation(char ori, int xForward, int yForward) {
         this.ori = ori;
         this.xForward = xForward;
@@ -29,5 +33,4 @@ public enum Orientation {
         }
         return null;
     }
-
 }
