@@ -6,10 +6,11 @@ import service.ValidatePosition;
 
 public class ValidateInputTest {
 
+    // 1, Lawn check
     @Test
     public void checkAValidLawn() {
-        ValidateLawn validator = new ValidateLawn();
-        boolean lawnStr1 = validator.checkLawn("5 5");
+        ValidateLawn lawnValidator = new ValidateLawn();
+        boolean lawnStr1 = lawnValidator.checkLawn("5 5");
         Assertions.assertTrue(lawnStr1);
     }
 
@@ -24,6 +25,15 @@ public class ValidateInputTest {
         Assertions.assertFalse(lawnStr4);
     }
 
+    @Test
+    public void givenLettersForLawnShouldNotBeAllowed() {
+        ValidateLawn lawnValidator = new ValidateLawn();
+        Assertions.assertThrows(NumberFormatException.class, () -> {
+            lawnValidator.checkLawn("s s");
+        });
+    }
+
+    // 2, Position check
     @Test
     public void checkAValidPosition() {
         ValidatePosition posValidator = new ValidatePosition();
@@ -41,6 +51,23 @@ public class ValidateInputTest {
     }
 
     @Test
+    public void givenOnlyLettersShouldNotBeAllowed() {
+        ValidatePosition posValidator = new ValidatePosition();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            posValidator.checkPosition("A A D");
+        });
+    }
+
+    @Test
+    public void givenOnlyNumbersShouldNotAllowed() {
+        ValidatePosition posValidator = new ValidatePosition();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            posValidator.checkPosition("1 2 3");
+        });
+    }
+
+    // 3, Orientation check
+    @Test
     public void checkAValidOrientation() {
         ValidateOrientation oriValidator = new ValidateOrientation();
         boolean oriStr1 = oriValidator.checkOrientation("GAGAGAGAA");
@@ -52,7 +79,17 @@ public class ValidateInputTest {
         ValidateOrientation oriValidator = new ValidateOrientation();
         boolean oriStr2 = oriValidator.checkOrientation("GAGAG  AGAA");
         boolean oriStr3 = oriValidator.checkOrientation("GAGAQAGAA");
+        boolean oriStr4 = oriValidator.checkOrientation("GAGaAAGAA");
         Assertions.assertFalse(oriStr2);
         Assertions.assertFalse(oriStr3);
+        Assertions.assertFalse(oriStr4);
+    }
+
+    @Test
+    public void givenNumbersForOrientationAreNotAllowed() {
+        ValidateOrientation oriValidator = new ValidateOrientation();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            oriValidator.checkOrientation("12345678");
+        });
     }
 }

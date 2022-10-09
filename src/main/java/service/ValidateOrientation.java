@@ -6,6 +6,8 @@ public class ValidateOrientation {
         boolean isValid = false;
         if (isValidOrientation(orientationStr)) {
             isValid = true;
+        } else {
+            throw new IllegalArgumentException("Orientation should be 'D', 'G', or 'A'");
         }
         return isValid;
     }

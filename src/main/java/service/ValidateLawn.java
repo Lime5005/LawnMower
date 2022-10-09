@@ -9,7 +9,11 @@ public class ValidateLawn {
             int yMax = Integer.parseInt(split[1]);
             if (xMax > 0 && yMax > 0) {
                 isValid = true;
+            } else {
+                throw new NumberFormatException("Lawn surface should be bigger than 0");
             }
+        } else {
+            throw new NumberFormatException("Lawn surface should be two digits(x, y)");
         }
         return isValid;
     }

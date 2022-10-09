@@ -6,6 +6,8 @@ public class ValidatePosition {
         boolean isValid = false;
         if (isValidMowerPosition(positionStr)) {
             isValid = true;
+        } else {
+            throw new IllegalArgumentException("Position should be in form of (digit1, digit2, orientation)");
         }
         return isValid;
     }
