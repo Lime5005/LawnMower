@@ -13,7 +13,8 @@ public class App {
     public static void main(String[] args) {
         MowerService mowerService = new MowerService();
         List<Position> positions = new ArrayList<>();
-        String path = "src/test/resources/standard_test.txt";
+        //String path = "src/test/resources/standard_test.txt";
+        String path = args[0];
         FileParser fileParser = new FileParser(path);
         List<String> lawnMowersAndInstructions = fileParser.getLawnMowersAndInstructions();
 
@@ -25,6 +26,8 @@ public class App {
             Position position = mowerService.executeInstruction(mower, instructions);
             positions.add(position);
         }
-        System.out.println(positions); //[Position(x=1, y=3, dir=N), Position(x=5, y=1, dir=E)]
+        for (Position position : positions) {
+            System.out.println(position);
+        }
     }
 }

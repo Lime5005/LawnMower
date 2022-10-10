@@ -5,7 +5,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 public class Position {
     private int x;
@@ -16,5 +15,10 @@ public class Position {
         this.x = x;
         this.y = y;
         this.dir = dir;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d %d %c", x, y, dir);
     }
 }
