@@ -44,6 +44,8 @@ public class MowerInstructionParser {
                 List<Instruction> instructionsForMower = parseStringToInstructions(instructions);
                 mowers.add(mower);
                 mowerInstructionMap.put(mower, instructionsForMower);
+            } else {
+                throw new IllegalArgumentException("Invalid position " + mowerPosition);
             }
         }
         return mowerInstructionMap;
@@ -57,7 +59,7 @@ public class MowerInstructionParser {
         return new Mower(lawnFromFile, new Position(x, y, dir));
     }
 
-    private List<Instruction> parseStringToInstructions(String instructions) {
+    public List<Instruction> parseStringToInstructions(String instructions) {
         List<Instruction> list = new ArrayList<>();
         for (char c : instructions.toCharArray()) {
             String s = String.valueOf(c);
@@ -66,6 +68,8 @@ public class MowerInstructionParser {
                 if (dir != null) {
                     list.add(dir);
                 }
+            } else {
+                throw new IllegalArgumentException("Invalid orientation " + s);
             }
         }
         if (list.isEmpty()) {
