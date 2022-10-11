@@ -11,7 +11,7 @@ public class MowerBehaviorTest {
     private final MowerService mowerService = new MowerService();
 
     @Test
-    public void shouldMowAsInstructions() {
+    public void shouldMowAsInstructionsAndTurnLeft() {
         // given
         Position position = new Position(1, 2, 'N');
         Lawn lawn = new Lawn(5, 5);
@@ -32,6 +32,27 @@ public class MowerBehaviorTest {
 
         // then
         Position destinationPosition = new Position(1, 3, 'N');
+        Assertions.assertEquals(destinationPosition, mower.getPosition());
+    }
+
+
+    @Test
+    public void shouldMowAsInstructionsAndTurnRight() {
+        // given
+        Position position = new Position(1, 2, 'N');
+        Lawn lawn = new Lawn(5, 5);
+        List<Instruction> instructions = new ArrayList<>(); // DADD
+        instructions.add(Instruction.RIGHT);
+        instructions.add(Instruction.FORWARD);
+        instructions.add(Instruction.RIGHT);
+        instructions.add(Instruction.RIGHT);
+        Mower mower = new Mower(lawn, position);
+
+        // when
+        mowerService.executeInstruction(mower, instructions);
+
+        // then
+        Position destinationPosition = new Position(2, 2, 'W');
         Assertions.assertEquals(destinationPosition, mower.getPosition());
     }
 
@@ -86,8 +107,6 @@ public class MowerBehaviorTest {
         Mower mower = new Mower(lawn, position);
 
         // when & then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            mowerService.executeInstruction(mower, instructions);
-        });
+        Assertions.assertThrows(IllegalArgumentException.class, () -> mowerService.executeInstruction(mower, instructions));
     }
 }

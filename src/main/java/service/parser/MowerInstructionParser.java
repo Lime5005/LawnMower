@@ -10,6 +10,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class will parse the string collected from file to Objects:
+ * Lawn, Mower, Instructions*
+ */
 public class MowerInstructionParser {
     // Initialise the returning data
     private final List<Mower> mowers = new ArrayList<>();
