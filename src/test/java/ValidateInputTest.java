@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import service.ValidateLawn;
 import service.ValidateOrientation;
 import service.ValidatePosition;
@@ -19,20 +21,14 @@ public class ValidateInputTest {
         Assertions.assertTrue(result);
     }
 
-    @Test
-    public void shouldCheckIfLawnIsInvalid() {
+    @ParameterizedTest
+    @ValueSource(strings = {"0 5", "1, 2", "s, 2"})
+    public void shouldCheckIfLawnIsInvalid(String lawn) {
         // given
         ValidateLawn lawnValidator = new ValidateLawn();
 
-        // when
-        boolean result1 = lawnValidator.isValidLawn("0 5");
-        boolean result2 = lawnValidator.isValidLawn("1, 2");
-        boolean result3 = lawnValidator.isValidLawn("s, 2");
-
-        // then
-        Assertions.assertFalse(result1);
-        Assertions.assertFalse(result2);
-        Assertions.assertFalse(result3);
+        // when & then
+        Assertions.assertFalse(lawnValidator.isValidLawn(lawn));
     }
 
     // 2, Position check
@@ -48,18 +44,14 @@ public class ValidateInputTest {
         Assertions.assertTrue(result);
     }
 
-    @Test
-    public void shouldCheckPositionIsInValid() {
+    @ParameterizedTest
+    @ValueSource(strings = {"1 2 N n", "1 2 "})
+    public void shouldCheckPositionIsInValid(String position) {
         // given
         ValidatePosition posValidator = new ValidatePosition();
 
-        // when
-        boolean result1 = posValidator.isValidPosition("1 2 N n");
-        boolean result2 = posValidator.isValidPosition("1 2 ");
-
-        // then
-        Assertions.assertFalse(result1);
-        Assertions.assertFalse(result2);
+        // when & then
+        Assertions.assertFalse(posValidator.isValidPosition(position));
     }
 
     // 3, Orientation check
@@ -75,19 +67,13 @@ public class ValidateInputTest {
         Assertions.assertTrue(result);
     }
 
-    @Test
-    public void shouldCheckOrientationIsInValid() {
+    @ParameterizedTest
+    @ValueSource(strings = {"GAGAG  AGAA", "GAGAQAGAA", "GAGaAAGAA"})
+    public void shouldCheckOrientationIsInValid(String instruction) {
         // given
         ValidateOrientation oriValidator = new ValidateOrientation();
 
-        // when
-        boolean result1 = oriValidator.isValidOrientation("GAGAG  AGAA");
-        boolean result2 = oriValidator.isValidOrientation("GAGAQAGAA");
-        boolean result3 = oriValidator.isValidOrientation("GAGaAAGAA");
-
-        // then
-        Assertions.assertFalse(result1);
-        Assertions.assertFalse(result2);
-        Assertions.assertFalse(result3);
+        // when & then
+        Assertions.assertFalse(oriValidator.isValidOrientation(instruction));
     }
 }
