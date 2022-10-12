@@ -84,7 +84,9 @@ public class ParserTest {
         instructions.add(Instruction.RIGHT);
         instructions.add(Instruction.RIGHT);
         map.put(mower, instructions);
+        int size = mowerInstructionMap.keySet().size();
 
+        Assertions.assertEquals(size, mowerInstructionParser.getMowers().size());
         Assertions.assertEquals(map, mowerInstructionMap);
     }
 
