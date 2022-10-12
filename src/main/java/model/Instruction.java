@@ -8,15 +8,15 @@ public enum Instruction {
     LEFT('G'),
     FORWARD('A');
 
-    private final char dir;
+    private final char direction;
 
-    Instruction(char dir) {
-        this.dir = dir;
+    Instruction(char direction) {
+        this.direction = direction;
     }
 
-    public static Instruction getDir(char c) {
+    public static Instruction getDirection(char c) {
         for (Instruction value : Instruction.values()) {
-            if (value.dir == c) {
+            if (value.direction == c) {
                 return value;
             }
         }

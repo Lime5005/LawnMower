@@ -1,7 +1,7 @@
 package service;
 
 public class ValidateLawn {
-    public boolean isValidLawn(String lawn) {
+    public static boolean isValidLawn(String lawn) {
         boolean isValid = false;
         if (isValidLawnPattern(lawn)) {
             String[] split = lawn.split("\\s+");
@@ -14,7 +14,7 @@ public class ValidateLawn {
         return isValid;
     }
 
-    private boolean isValidLawnPattern(String lawn) {
+    private static boolean isValidLawnPattern(String lawn) {
         return lawn.matches("^\\s*(\\d+)\\s+(\\d+)\\s*$");
     }
 }

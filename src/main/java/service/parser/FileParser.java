@@ -17,6 +17,9 @@ public class FileParser {
     private final String filePath;
 
     public FileParser(String filePath) {
+        if (filePath == null) {
+            throw new IllegalArgumentException("No file");
+        }
         this.filePath = filePath;
     }
 
@@ -26,17 +29,15 @@ public class FileParser {
      */
     public List<String> getLawnMowersAndInstructions() {
         List<String> result = new ArrayList<>();
-        if (filePath != null) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-                String line = reader.readLine();
-                while (line != null) {
-                    result.add(line);
-                    line = reader.readLine();
-                }
-            } catch (IOException e) {
-                logger.error("Error in reading file " + filePath);
-                e.printStackTrace();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line = reader.readLine();
+            while (line != null) {
+                result.add(line);
+                line = reader.readLine();
             }
+        } catch (IOException e) {
+            logger.error("Error in reading file " + filePath);
+            e.printStackTrace();
         }
         return result;
     }

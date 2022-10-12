@@ -9,16 +9,16 @@ import lombok.*;
 public class Position {
     private int x;
     private int y;
-    private char dir;
+    private char orientation;
 
-    public Position(int x, int y, char dir) {
+    public Position(int x, int y, char orientation) {
         this.x = x;
         this.y = y;
-        this.dir = dir;
+        this.orientation = orientation;
     }
 
     @Override
     public String toString() {
-        return String.format("%d %d %c", x, y, dir);
+        return String.format("%d %d %c", x, y, orientation);
     }
 }

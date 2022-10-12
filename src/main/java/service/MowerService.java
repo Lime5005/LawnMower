@@ -22,11 +22,8 @@ public class MowerService {
                 }
             } else {
                 Orientation orientation = changeOrientation(instruction, position);
-                if (orientation != null) {
-                    char ori = orientation.getOri();
-                    assert position != null;
-                    position.setDir(ori);
-                }
+                char orientationChar = orientation.getOrientation();
+                position.setOrientation(orientationChar);
             }
         }
         mower.setPosition(position);

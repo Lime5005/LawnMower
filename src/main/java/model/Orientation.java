@@ -11,23 +11,23 @@ public enum Orientation {
     SOUTH('S', 0, -1),
     WEST('W', -1, 0);
 
-    private final char ori;
+    private final char orientation;
     private final int xForward;
     private final int yForward;
 
-    public char getOri() {
-        return ori;
+    public char getOrientation() {
+        return orientation;
     }
 
-    Orientation(char ori, int xForward, int yForward) {
-        this.ori = ori;
+    Orientation(char orientation, int xForward, int yForward) {
+        this.orientation = orientation;
         this.xForward = xForward;
         this.yForward = yForward;
     }
 
-    public static Orientation getOrientationByOri(char ori) {
+    public static Orientation getByChar(char c) {
         for (Orientation orientation : Orientation.values()) {
-            if (orientation.ori == ori) {
+            if (orientation.orientation == c) {
                 return orientation;
             }
         }
