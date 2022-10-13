@@ -1,6 +1,9 @@
 package service.parser;
 
 import model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import service.MowerService;
 import service.ValidateLawn;
 import service.ValidateOrientation;
 import service.ValidatePosition;
@@ -15,6 +18,7 @@ import java.util.Map;
  * Lawn, Mower, Instructions*
  */
 public class MowerInstructionParser {
+    private final Logger logger = LoggerFactory.getLogger(MowerInstructionParser.class);
     // Initialize the returning data
     private final List<Mower> mowers = new ArrayList<>();
     private final Map<Mower, List<Instruction>> mowerInstructionMap = new LinkedHashMap<>();
@@ -31,6 +35,7 @@ public class MowerInstructionParser {
             int yMax = Integer.parseInt(lawnStr.split("\\s+")[1]);
             return new Lawn(xMax, yMax);
         } else {
+            logger.error("Error while parsing lawn " + lawnStr);
             throw new IllegalArgumentException("Invalid lawn data " + lawnStr);
         }
     }
@@ -56,6 +61,7 @@ public class MowerInstructionParser {
                 mowers.add(mower);
                 mowerInstructionMap.put(mower, instructionsForMower);
             } else {
+                logger.error("Error while parsing position " + mowerPosition);
                 throw new IllegalArgumentException("Invalid position " + mowerPosition);
             }
         }
@@ -91,10 +97,12 @@ public class MowerInstructionParser {
                     list.add(dir);
                 }
             } else {
+                logger.error("Error while parseStringToInstructions " + instructions);
                 throw new IllegalArgumentException("Invalid orientation " + s);
             }
         }
         if (list.isEmpty()) {
+            logger.error("Error while parseStringToInstructions size 0");
             throw new IllegalArgumentException("No instructions");
         }
         return list;

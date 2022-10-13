@@ -1,6 +1,8 @@
 package service;
 
 import model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  * The class to make the mower execute the instructions as designed *
  */
 public class MowerService {
+    private final Logger logger = LoggerFactory.getLogger(MowerService.class);
     private final OrientationService orientationService = new OrientationService();
 
     /**
@@ -17,6 +20,7 @@ public class MowerService {
      * @return the mower's position after execution
      */
     public Position executeInstruction(Mower mower, List<Instruction> instructionList) {
+        logger.info("[Function: executeInstruction] mower (" + mower + ") and instructionList (" + instructionList + ")");
         Position position = mower.getPosition();
         Lawn lawn = mower.getLawn();
         assertMowerInsideLawn(position, lawn);
@@ -65,6 +69,7 @@ public class MowerService {
         } else if (instruction.equals(Instruction.RIGHT)) {
             return orientationService.getClockwiseOrientation(position);
         } else {
+            logger.error("Error while changeOrientation for instruction " + instruction);
             throw new IllegalArgumentException("Change Orientation failed with instruction + (" + instruction + ") and position (" + position + ")");
         }
     }
