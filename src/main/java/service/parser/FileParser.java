@@ -17,8 +17,7 @@ public record FileParser(String filePath) {
     }
 
     /**
-     * This function reads the file, collect the data into a list.
-     *
+     * This function reads the file, collect the data into a list *
      * @return a list contains all the data in the file
      */
     public List<String> getLawnMowersAndInstructions() {

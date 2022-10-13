@@ -3,7 +3,18 @@ package service;
 import model.Orientation;
 import model.Position;
 
+/**
+ * Separate the whole business logic into 3 parts:
+ * 1, 'A', go forward, the coordinate changed, but the orientation will not
+ * 2, 'D', turn right, the orientation changed, but the coordinate will not
+ * 3, 'G', turn left, same as 'D', only the orientation changed.
+ */
 public class OrientationService  {
+    /**
+     * Go forward, take the initial orientation, but change the coordinate *
+     * @param position a mower's initial position
+     * @return the changed new position
+     */
     public Position getForwardPosition(Position position) {
         Orientation orientation = Orientation.getByChar(position.getOrientation());
         assert orientation != null;
@@ -12,6 +23,12 @@ public class OrientationService  {
         return new Position(x, y, position.getOrientation());
     }
 
+    /**
+     * If turn right, switch to any of the possible 4 orientations,
+     * depending on it's initial position *
+     * @param position a mower's initial position
+     * @return the changed orientation, or throw an exception if not valid position
+     */
     public Orientation getClockwiseOrientation(Position position) {
         return switch (position.getOrientation()) {
             case 'N' -> Orientation.EAST;
@@ -22,6 +39,12 @@ public class OrientationService  {
         };
     }
 
+    /**
+     * If turn left, switch to any of the possible 4 orientations,
+     * depending on it's initial position *
+     * @param position a mower's initial position
+     * @return the changed orientation, or throw an exception if not valid position
+     */
     public Orientation getCounterClockwiseOrientation(Position position) {
         return switch (position.getOrientation()) {
             case 'N' -> Orientation.WEST;

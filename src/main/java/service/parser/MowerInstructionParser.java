@@ -19,6 +19,11 @@ public class MowerInstructionParser {
     private final List<Mower> mowers = new ArrayList<>();
     private final Map<Mower, List<Instruction>> mowerInstructionMap = new LinkedHashMap<>();
 
+    /**
+     * Take the string list from file and get the first line *
+     * @param fileData file data list
+     * @return a Lawn object
+     */
     public Lawn getLawnFromFile(List<String> fileData) {
         String lawnStr = fileData.get(0);
         if (ValidateLawn.isValidLawn(lawnStr)) {
@@ -34,6 +39,11 @@ public class MowerInstructionParser {
         return mowers;
     }
 
+    /**
+     * Take the string list from file and get the rest of the lines except the first one *
+     * @param fileData  file data list
+     * @return a map contains the mower as key, its instructions as value
+     */
     public Map<Mower, List<Instruction>> getMowerInstructionMap(List<String> fileData) {
         Lawn lawnFromFile = getLawnFromFile(fileData);
         List<String> mowerAndInstructions = fileData.subList(1, fileData.size());
@@ -52,6 +62,12 @@ public class MowerInstructionParser {
         return mowerInstructionMap;
     }
 
+    /**
+     * Help getMowerInstructionMap to extract the mower object *
+     * @param mowerPosition the string line from file which is valid for mower data pattern
+     * @param lawnFromFile the lawn object received from the getMowerInstructionMap
+     * @return
+     */
     private Mower parseStringToMower(String mowerPosition, Lawn lawnFromFile) {
         int x = Integer.parseInt(mowerPosition.split("\\s+")[0]);
         int y = Integer.parseInt(mowerPosition.split("\\s+")[1]);
@@ -59,6 +75,12 @@ public class MowerInstructionParser {
         return new Mower(lawnFromFile, new Position(x, y, orientation));
     }
 
+    /**
+     * Help getMowerInstructionMap to extract the string instructions as an object,
+     * if is valid instruction pattern *
+     * @param instructions the string line from file
+     * @return a list of Instruction, or throw an IllegalArgumentException if empty or invalid data
+     */
     public List<Instruction> parseStringToInstructions(String instructions) {
         List<Instruction> list = new ArrayList<>();
         for (char c : instructions.toCharArray()) {
