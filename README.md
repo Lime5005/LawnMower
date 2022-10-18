@@ -10,5 +10,5 @@ Download the project, then using the following terminal commands
 Then the application will execute the test and show the results in terminal.
 
 ## Pre-request
-- JDK 14
+- JDK 16
 - Maven 3.8.1

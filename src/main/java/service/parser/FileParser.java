@@ -3,11 +3,12 @@ package service.parser;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class will read the file and return a string.
+ * This class will read the file and return a list of string object.
  */
 public record FileParser(String filePath) {
     public FileParser {
@@ -22,7 +23,7 @@ public record FileParser(String filePath) {
      */
     public List<String> getLawnMowersAndInstructions() {
         List<String> result = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
             String line = reader.readLine();
             while (line != null) {
                 result.add(line);

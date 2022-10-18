@@ -72,7 +72,7 @@ public class MowerInstructionParser {
      * Help getMowerInstructionMap to extract the mower object *
      * @param mowerPosition the string line from file which is valid for mower data pattern
      * @param lawnFromFile the lawn object received from the getMowerInstructionMap
-     * @return
+     * @return a new mower object
      */
     private Mower parseStringToMower(String mowerPosition, Lawn lawnFromFile) {
         int x = Integer.parseInt(mowerPosition.split("\\s+")[0]);
